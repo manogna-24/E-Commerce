@@ -11,6 +11,7 @@ const user_all= async(req,res)=>{
         res.json({'message': error})
     }
 }
+
 const register=async(req,res)=>{
       let u_id= req.body.u_id
        let u_name= req.body.u_name
