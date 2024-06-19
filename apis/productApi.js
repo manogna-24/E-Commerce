@@ -12,8 +12,9 @@ const products_all=async(req,res)=>{
 }
 
 const insert_product = async (req, res) => {
+    let p_id= req.body.p_id
     const product = new Product({
-        p_id: req.body.p_id,
+        p_id,
         p_name: req.body.p_name,
         p_cost: req.body.p_cost,
        p_cat: req.body.p_cat,
@@ -21,9 +22,16 @@ const insert_product = async (req, res) => {
        p_desc: req.body.p_desc
     })
     try {
+        const sav =await Product.findOne({p_id})
+        if(sav){
+            console.log("Product with this id is already present")
+            res.send("Product not inserted as product with this id is already present")
+        }
+        else{
         const savedProduct = await product.save()
         console.log('Product inserted')
         res.send(savedProduct)
+        }
     }
     catch (error) {
         res.status(400).send(error)
